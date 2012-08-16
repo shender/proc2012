@@ -1,3 +1,5 @@
 *.aux 
 *.out 
 *.log
+/proc2012.aux
+/proc2012.out
