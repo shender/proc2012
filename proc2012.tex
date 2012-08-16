@@ -812,17 +812,17 @@
     \begin{center}
         \begin{circuitikz}
 
-          \draw[thick] (0,0) node [anchor=east] {$A_2$} to
-          [generic,l_=$R_1$] (3,0) node [anchor=west] {$A_3$} to
-          [generic,l_=$R_2$] (1.5,2.6) node [anchor=west] {$A_1$} to
-          [generic,l_=$R_3$] (0,0);
-
           \draw[thick] (5,0) node [anchor=east] {$B_2$} to
-          [generic,l_=$r_2$] (6.5,0.87) to [generic,l_=$r_1$]
-          (6.5,2.6) node [anchor=west] {$B_1$};
+          [generic,l_=$r_1$] (8,0) node [anchor=west] {$B_3$} to
+          [generic,l_=$r_2$] (6.5,2.6) node [anchor=west] {$B_1$} to
+          [generic,l_=$r_3$] (5,0);
 
-          \draw[thick] (6.5,0.87) to [generic,l_=$r_3$] (8,0) node
-          [anchor=west] {$B_3$};
+          \draw[thick] (0,0) node [anchor=east] {$A_2$} to
+          [generic,l_=$R_2$] (1.5,0.87) to [generic,l_=$R_1$]
+          (1.5,2.6) node [anchor=west] {$A_1$};
+
+          \draw[thick] (1.5,0.87) to [generic,l_=$R_3$] (3,0) node
+          [anchor=west] {$A_3$};
         \end{circuitikz}
     \end{center}
   \item Зная сопротивления $R_1$, $R_2$ и $R_3$, подберите $r_1$,
@@ -848,9 +848,9 @@
         \begin{circuitikz}
 
           \draw[thick] (0,1) -- (0.5,1) -- (0.5,0) to [generic,l_=$R$]
-          (2.5,0) to [generic,l_=$3R$] (4.5,0) -- (4.5,1) -- (5,1);
+          (2.5,0) to [generic,l_=$2R$] (4.5,0) -- (4.5,1) -- (5,1);
 
-          \draw[thick] (0.5,1) -- (0.5,2) to [generic,l_=$R$] (2.5,2)
+          \draw[thick] (0.5,1) -- (0.5,2) to [generic,l_=$2R$] (2.5,2)
           to [generic,l_=$R$] (4.5,2) -- (4.5,1); 
 
           \draw[thick] (2.5,0) to [generic,l_=$R$] (2.5,2);
@@ -956,15 +956,15 @@
         \draw[thick] (2.5,0) to [generic,l_=$R$] (2.5,2);
       \end{circuitikz}
     \end{center}
-  \item \textit{(Россия-1997, 10 класс, задача 4, $r=R$)} Очень
-    длинная цепочка составлена из батарей с ЭДС $\mathcal{E}=12$ В,
-    внутренним сопротивлением $r=4$ Ом и резисторов с таким же
+  \item \textit{(По мотивам России-1997, 10 класс, задача 4)} Очень
+    длинная цепочка составлена из батарей с ЭДС $\mathcal{E}$ и
+    внутренним сопротивлением $r$ и резисторов с таким же
     сопротивлением. Определите ЭДС $\mathcal{E}_0$ и внутреннее
     сопротивление $r_0$ эквивалентной батареи.
     \begin{center}
       \begin{circuitikz}
-        \draw[thick] (0,0) to [battery,l^=$\mathcal{E}$] (2,0) to
-        [battery,l^=$\mathcal{E}$] (4,0);
+        \draw[thick] (0,0) to [battery,l^=$\mathcal{E}{,}r$] (2,0) to
+        [battery,l^=$\mathcal{E}{,}r$] (4,0);
         \draw[thick] (2,0) to[generic,l_=$r$] (2,-2);
         \draw[thick] (4,0) to[generic,l_=$r$] (4,-2);
         \draw[thick] (0,-2) -- (4,-2);
@@ -1028,8 +1028,7 @@
   \item \textit{(ГГК 7.15)} На рисунке \ref{fig:osc1a} показано
     положение равновесия колебательной системы --- математического
     маятника с пружинной связью. Найдите период $T$ малых колебаний
-    системы. Каким станет период $T'$, если пружину заменить тонкой
-    полоской резины той же длины и жёсткости?
+    системы.
     \begin{figure}[ht]
       \centering
       \subfloat[]{
@@ -1059,8 +1058,21 @@
         \end{tikzpicture}
         \label{fig:osc1b}
       }
+      \hspace{1cm}
+      \subfloat[]{
+        \begin{tikzpicture}
+          \draw[thick,interface] (1,3) -- (2.1,3);
+          \draw[thick] (1.5,3) -- (1.5,0) node[left,midway] {$l$};
+          \draw[fill=black] (1.5,0) circle (0.1cm) node[right,blue]
+            {$m$};
+          \draw[thick,spring] (1.5,1.5) -- (2.5,1.5)
+          node[above,midway,blue] {$k$};
+          \draw[thick,interface] (2.5,1.9) -- (2.5,1.1);
+        \end{tikzpicture}
+        \label{fig:osc1c}
+      }
 
-      \caption{К занятию 1.}
+      \caption{К занятиям 1--2.}
     \end{figure}
   \item \textit{(Савченко 3.3.11)} К наклонной стене подвешен маятник
     длиной $l$. Маятник отклонили от вертикали на малый угол, в два
@@ -1079,6 +1091,18 @@
     центру треугольника. Определите период колебаний системы. 
   \end{enumerate}
 \item Занятие 2.
+  \begin{itemize}
+    \item На занятии был разобран общий метод определения частоты 
+      колебаний системы: если полная энергия системы представима в виде 
+      $E = A\xi^2 + B\dot{\xi}^2$, то частота возникающих колебаний 
+      $\omega = \sqrt{A/B}$. Кроме того, была разобрана задача
+      (не включена в зачет):
+    \item \textit{(Савченко 3.2.20)} Как изменится частота колебаний
+      маятника, представляющего собой груз на лёгком стержне, если к
+      середине стержня прикрепить горизонтальную пружину жёсткости $k$?
+      На рисунке \ref{fig:osc1c} изображено состояние равновесия.
+  \end{itemize}
+\item Занятия 3--4.
   \begin{figure}[ht]
     \centering
     \subfloat[]{
@@ -1092,19 +1116,19 @@
       \end{tikzpicture}
       \label{fig:osc2a}
     }
-    \hspace{1cm}
-    \subfloat[]{
-      \begin{tikzpicture}
-        \draw[thick,interface] (1,3) -- (2.1,3);
-        \draw[thick] (1.5,3) -- (1.5,0) node[left,midway] {$l$};
-        \draw[fill=black] (1.5,0) circle (0.1cm) node[right,blue]
-        {$m$};
-        \draw[thick,spring] (1.5,1.5) -- (2.5,1.5)
-        node[above,midway,blue] {$k$};
-        \draw[thick,interface] (2.5,1.9) -- (2.5,1.1);
-      \end{tikzpicture}
-      \label{fig:osc2b}
-    }
+      \hspace{1cm}
+      \subfloat[]{
+        \begin{tikzpicture}
+          \draw[thick,interface] (1,3) -- (2.1,3);
+          \draw[thick] (1.5,3) -- (1.5,1.5) node[left,midway] {$l$}
+            -- (1.5,0) node[left,midway] {$l$};
+          \draw[fill=black] (1.5,0) circle (0.1cm) node[right,blue]
+            {$m$};
+          \draw[fill=black] (1.5,1.5) circle (0.1cm) node[right,blue]
+            {$m$};
+        \end{tikzpicture}
+        \label{fig:osc2b}
+      }
     \hspace{1cm}
     \subfloat[]{
       \begin{tikzpicture}
@@ -1121,16 +1145,15 @@
       \end{tikzpicture}
       \label{fig:osc2c}
     }
-    \caption{К занятию 2.}
+    \caption{К занятиям 3--4.}
     \label{fig:osc2}
   \end{figure}
   \begin{enumerate}
   \item \textit{(Савченко 3.2.26)} Найдите отношение частот колебаний
     молекулы $H_2$ и молекулы $HD$ ($D$ --- атом дейтерия).
-  \item \textit{(Савченко 3.2.20)} Как изменится частота колебаний
-    маятника, представляющего собой груз на лёгком стержне, если к
-    середине стержня прикрепить горизонтальную пружину жёсткости $k$?
-    На рисунке \ref{fig:osc2b} изображено состояние равновесия.
+  \item В середине и конце легкого стержня длины $2l$ закреплены шарики 
+    равной массы (см. рис. \ref{fig:osc2b}). Найдите период колебаний
+    такого маятника.
   \item \textit{(Савченко 3.2.9)} На сколько отстают за сутки
     маятниковые часы, поднятые на высоту $h=10$ км?
   \item \textit{(Савченко 3.3.15)} Стрелок пытается попасть в диск
