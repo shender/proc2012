@@ -3,42 +3,42 @@
 \contentsline {section}{\numberline {2}Ежедневные занятия.}{6}{section.2}
 \contentsline {subsection}{\numberline {2.1}8 класс. }{6}{subsection.2.1}
 \contentsline {subsubsection}{\numberline {2.1.1}Теория.}{6}{subsubsection.2.1.1}
-\contentsline {subsubsection}{\numberline {2.1.2}Задачи.}{6}{subsubsection.2.1.2}
-\contentsline {subsubsection}{\numberline {2.1.3}Результаты работы на занятиях. }{7}{subsubsection.2.1.3}
-\contentsline {subsubsection}{\numberline {2.1.4}Эксперимент.}{8}{subsubsection.2.1.4}
-\contentsline {subsection}{\numberline {2.2}9 класс.}{8}{subsection.2.2}
-\contentsline {subsubsection}{\numberline {2.2.1}Теория.}{8}{subsubsection.2.2.1}
-\contentsline {subsubsection}{\numberline {2.2.2}Задачи.}{8}{subsubsection.2.2.2}
-\contentsline {subsubsection}{\numberline {2.2.3}Эксперимент.}{8}{subsubsection.2.2.3}
-\contentsline {subsection}{\numberline {2.3}10 класс. }{9}{subsection.2.3}
-\contentsline {subsubsection}{\numberline {2.3.1}Теория.}{9}{subsubsection.2.3.1}
-\contentsline {subsubsection}{\numberline {2.3.2}Задачи (усиленная программа).}{10}{subsubsection.2.3.2}
+\contentsline {subsubsection}{\numberline {2.1.2}Задачи.}{7}{subsubsection.2.1.2}
+\contentsline {subsubsection}{\numberline {2.1.3}Эксперимент.}{7}{subsubsection.2.1.3}
+\contentsline {subsubsection}{\numberline {2.1.4}Результаты работы на занятиях. }{8}{subsubsection.2.1.4}
+\contentsline {subsection}{\numberline {2.2}9 класс.}{9}{subsection.2.2}
+\contentsline {subsubsection}{\numberline {2.2.1}Теория.}{9}{subsubsection.2.2.1}
+\contentsline {subsubsection}{\numberline {2.2.2}Задачи.}{9}{subsubsection.2.2.2}
+\contentsline {subsubsection}{\numberline {2.2.3}Эксперимент.}{9}{subsubsection.2.2.3}
+\contentsline {subsection}{\numberline {2.3}10 класс. }{10}{subsection.2.3}
+\contentsline {subsubsection}{\numberline {2.3.1}Теория.}{10}{subsubsection.2.3.1}
+\contentsline {subsubsection}{\numberline {2.3.2}Задачи (усиленная программа).}{11}{subsubsection.2.3.2}
 \contentsline {subsubsection}{\numberline {2.3.3}Задачи (обычная программа).}{16}{subsubsection.2.3.3}
 \contentsline {subsubsection}{\numberline {2.3.4}Эксперимент.}{16}{subsubsection.2.3.4}
-\contentsline {subsection}{\numberline {2.4}11 класс.}{16}{subsection.2.4}
-\contentsline {subsubsection}{\numberline {2.4.1}Теория.}{16}{subsubsection.2.4.1}
-\contentsline {subsubsection}{\numberline {2.4.2}Задачи.}{16}{subsubsection.2.4.2}
-\contentsline {subsubsection}{\numberline {2.4.3}Эксперимент.}{16}{subsubsection.2.4.3}
-\contentsline {section}{\numberline {3}Материалы физических боёв. }{17}{section.3}
-\contentsline {subsection}{\numberline {3.1}8 класс.}{17}{subsection.3.1}
-\contentsline {subsubsection}{\numberline {3.1.1}Полуфинал.}{17}{subsubsection.3.1.1}
-\contentsline {subsubsection}{\numberline {3.1.2}Финал.}{18}{subsubsection.3.1.2}
-\contentsline {subsection}{\numberline {3.2}9 класс.}{19}{subsection.3.2}
-\contentsline {subsubsection}{\numberline {3.2.1}Полуфинал.}{19}{subsubsection.3.2.1}
-\contentsline {subsubsection}{\numberline {3.2.2}Специальный физбой.}{21}{subsubsection.3.2.2}
-\contentsline {subsection}{\numberline {3.3}10 класс.}{22}{subsection.3.3}
-\contentsline {subsubsection}{\numberline {3.3.1}Полуфинал. }{22}{subsubsection.3.3.1}
-\contentsline {subsubsection}{\numberline {3.3.2}Финал. }{23}{subsubsection.3.3.2}
-\contentsline {section}{\numberline {4}Физический хоккей.}{24}{section.4}
-\contentsline {subsection}{\numberline {4.1}8 класс. }{24}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}11 класс.}{24}{subsection.4.2}
-\contentsline {section}{\numberline {5}Факультативы.}{25}{section.5}
-\contentsline {section}{\numberline {6}День Экспериментатора. }{26}{section.6}
-\contentsline {subsection}{\numberline {6.1}8 класс. }{26}{subsection.6.1}
-\contentsline {subsection}{\numberline {6.2}9 класс.}{26}{subsection.6.2}
-\contentsline {subsection}{\numberline {6.3}10 класс.}{26}{subsection.6.3}
-\contentsline {subsection}{\numberline {6.4}11 класс.}{27}{subsection.6.4}
-\contentsline {section}{\numberline {7}Заключительные контрольные. }{28}{section.7}
-\contentsline {subsection}{\numberline {7.1}8 класс.}{28}{subsection.7.1}
-\contentsline {subsection}{\numberline {7.2}10 класс.}{30}{subsection.7.2}
-\contentsline {subsection}{\numberline {7.3}11 класс.}{30}{subsection.7.3}
+\contentsline {subsection}{\numberline {2.4}11 класс.}{17}{subsection.2.4}
+\contentsline {subsubsection}{\numberline {2.4.1}Теория.}{17}{subsubsection.2.4.1}
+\contentsline {subsubsection}{\numberline {2.4.2}Задачи.}{17}{subsubsection.2.4.2}
+\contentsline {subsubsection}{\numberline {2.4.3}Эксперимент.}{17}{subsubsection.2.4.3}
+\contentsline {section}{\numberline {3}Материалы физических боёв. }{18}{section.3}
+\contentsline {subsection}{\numberline {3.1}8 класс.}{18}{subsection.3.1}
+\contentsline {subsubsection}{\numberline {3.1.1}Полуфинал.}{18}{subsubsection.3.1.1}
+\contentsline {subsubsection}{\numberline {3.1.2}Финал.}{19}{subsubsection.3.1.2}
+\contentsline {subsection}{\numberline {3.2}9 класс.}{20}{subsection.3.2}
+\contentsline {subsubsection}{\numberline {3.2.1}Полуфинал.}{20}{subsubsection.3.2.1}
+\contentsline {subsubsection}{\numberline {3.2.2}Специальный физбой.}{22}{subsubsection.3.2.2}
+\contentsline {subsection}{\numberline {3.3}10 класс.}{23}{subsection.3.3}
+\contentsline {subsubsection}{\numberline {3.3.1}Полуфинал. }{23}{subsubsection.3.3.1}
+\contentsline {subsubsection}{\numberline {3.3.2}Финал. }{24}{subsubsection.3.3.2}
+\contentsline {section}{\numberline {4}Физический хоккей.}{25}{section.4}
+\contentsline {subsection}{\numberline {4.1}8 класс. }{25}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}11 класс.}{25}{subsection.4.2}
+\contentsline {section}{\numberline {5}Факультативы.}{26}{section.5}
+\contentsline {section}{\numberline {6}День Экспериментатора. }{27}{section.6}
+\contentsline {subsection}{\numberline {6.1}8 класс. }{27}{subsection.6.1}
+\contentsline {subsection}{\numberline {6.2}9 класс.}{27}{subsection.6.2}
+\contentsline {subsection}{\numberline {6.3}10 класс.}{27}{subsection.6.3}
+\contentsline {subsection}{\numberline {6.4}11 класс.}{28}{subsection.6.4}
+\contentsline {section}{\numberline {7}Заключительные контрольные. }{29}{section.7}
+\contentsline {subsection}{\numberline {7.1}8 класс.}{29}{subsection.7.1}
+\contentsline {subsection}{\numberline {7.2}10 класс.}{31}{subsection.7.2}
+\contentsline {subsection}{\numberline {7.3}11 класс.}{31}{subsection.7.3}
