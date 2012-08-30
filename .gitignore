@@ -1,6 +1,7 @@
-*.aux 
-*.out 
-*.log
 /proc2012.aux
 /proc2012.out
 /proc2012.toc
+/proc2012p.aux
+/proc2012p.out
+/proc2012p.toc
+
