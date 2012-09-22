@@ -116,6 +116,109 @@
 	\pagebreak[2]
 }
 
+% шаблон для протокола физбоя
+% ширина протокола, задаётся вручную, по умолчанию равен ширине текста
+% на странице
+\newlength{\pwidth}
+\pwidth=\textwidth
+% высота ячейки
+\newlength{\pheightcell}
+\pheightcell=1.75cm
+% баллы жюри
+\newcounter{jury}
+\setcounter{jury}{12}
+% номер вызова
+\newcounter{nocall}
+\setcounter{nocall}{1}
+% заголовок протокола: названия команд
+\newcommand{\ptitle}[2]{
+  \draw[thick] (0,0) rectangle (0.1*\pwidth,-\pheightcell) node[midway] {\textbf{№}};
+  \draw[thick] (0.1*\pwidth,0) rectangle (0.45*\pwidth,-\pheightcell) node[midway] {\textbf{#1}};
+  \draw[thick] (0.45*\pwidth,0) rectangle (0.8*\pwidth,-\pheightcell)
+  node[midway] {\textbf{#2}}; 
+  \draw[thick] (0.8*\pwidth,0) rectangle (\pwidth,-\pheightcell) node[midway] {\textbf{Ж}};
+}
+% подведение итогов
+% \psum{баллы команды 1}{баллы команды 2}{баллы жюри}
+\newcommand{\psum}[3]{ 
+  \def\pos{\arabic{nocall}*\pheightcell};
+  % рамка вокруг ячейки
+  \draw[thick] (0,-\pos) rectangle (\pwidth,-\pos-\pheightcell);
+  % "Итог" и рамка
+  \draw[thick] (0,-\pos) rectangle (0.1*\pwidth,-\pos-\pheightcell)
+  node[midway] {Итог:};
+  \draw[thick] (0.1*\pwidth,-\pos) rectangle
+  (0.45*\pwidth,-\pos-\pheightcell) node[midway] {\LARGE{#1}};
+
+  \draw[thick] (0.45*\pwidth,-\pos) rectangle (0.8*\pwidth,-\pos-\pheightcell)
+  node[midway] {\LARGE{#2}}; 
+
+  \draw[thick] (0.8*\pwidth,-\pos) rectangle (\pwidth,-\pos-\pheightcell)
+  node[midway] {\LARGE{#3}}; 
+}
+
+% вызов на задачу: порядок вызова, номер задачи, баллы
+% отвечающего и оппонента, инициалы участников
+% условные обозначения для порядка вызова:
+% 1->2 --- команда 1 вызывает команду 2
+% 1<-2 --- команда 2 вызывает команду 1
+% 1->|2 --- команда 1 вызывала команду 2, но получила проверку корректности
+% 1|<-2 --- команда 2 вызывала команду 1, но получила проверку корректности
+\newcommand{\pcall}[6]{
+  % определяем местонахождение очередной ячейки
+  \def\pos{\arabic{nocall}*\pheightcell};
+  % рамка вокруг ячейки
+  \draw[thick] (0,-\pos) rectangle (\pwidth,-\pos-\pheightcell);
+  % номер задачи и рамка
+  \draw[thick] (0,-\pos) rectangle (0.1*\pwidth,-\pos-\pheightcell)
+  node[midway] {#2};
+  % switch
+  \def\calllr{1->2}
+  \def\callrl{1<-2}
+  \def\calllor{1->|2}
+  \def\callrol{1|<-2}
+  \begingroup
+  \def\tmp{#1}%
+  \ifx\tmp\calllr
+    \draw[very thick,*->] (0.28*\pwidth,-\pos-0.5*\pheightcell)%
+    node[left=0.2cm] {\Large{#3}} -- ++(0.33*\pwidth,0) node[right=0.2cm]%
+    {\Large{#4}};%
+  \else\ifx\tmp\callrl
+    \draw[very thick,<-*] (0.28*\pwidth,-\pos-0.5*\pheightcell)
+    node[left=0.2cm] {\Large{#3}} -- ++(0.33*\pwidth,0) node[right=0.2cm]
+    {\Large{#4}};%
+  \else\ifx\tmp\calllor
+    \draw[very thick,*->] (0.28*\pwidth,-\pos-0.45*\pheightcell)
+    node[left=0.2cm] {\Large{#3}} --  ++(0.33*\pwidth,0) node[right=0.2cm]
+    {\Large{#4}};%
+    % отскок
+    \draw[very thick,->,rotate around={180:(0.445*\pwidth,-\pos-0.55*\pheightcell)}]
+    (0.28*\pwidth,-\pos-0.47*\pheightcell)  -- ++(0.33*\pwidth,0);%
+    \draw[ultra thick] (0.61*\pwidth,-\pos-0.37*\pheightcell) -- ++(0,-0.6cm);%
+  \else\ifx\tmp\callrol
+    \draw[very thick,<-*] (0.28*\pwidth,-\pos-0.45*\pheightcell)
+    node[left=0.2cm] {\Large{#3}} --  ++(0.33*\pwidth,0) node[right=0.2cm]
+    {\Large{#4}};%
+    % отскок
+    \draw[very thick,<-,rotate around={180:(0.445*\pwidth,-\pos-0.55*\pheightcell)}]
+    (0.28*\pwidth,-\pos-0.47*\pheightcell)  -- ++(0.33*\pwidth,0);%
+    \draw[ultra thick] (0.28*\pwidth,-\pos-0.37*\pheightcell) --
+    ++(0,-0.6cm);%
+  \fi\fi\fi\fi
+  \endgroup
+  % инициалы
+  \draw (0.35*\pwidth,-\pos-0.25*\pheightcell) node {#5} ++(0.2*\pwidth,0) node {#6};
+  % баллы жюри и рамка
+  \addtocounter{jury}{-#3}
+  \addtocounter{jury}{-#4}
+  \draw[thick] (0.8*\pwidth,-\pos) rectangle (\pwidth,-\pos-\pheightcell)
+  node[midway] {\Large{\arabic{jury}}};
+  % переход на следующий круг
+  \setcounter{jury}{12}
+  \addtocounter{nocall}{1}
+}
+
+
 \tikzset{>=latex, interface/.style = {postaction = {draw, decorate,
 	    decoration = {border, angle = 45, amplitude = 0.2cm, segment length=1.4323mm}}},%
 		spring/.style={decorate,decoration={snake,amplitude=1mm,
@@ -1690,79 +1793,29 @@
   входного отверстия $S_1$, выходного --- $S_2$. }
 
 
-% \clearpage
+\clearpage
 
-% \begin{center}
-%   \Large{\textsc{Протокол специального физбоя.}}
-% \end{center}
+\begin{center}
+  \Large{\textsc{Протокол специального физбоя.}}
+\end{center}
 
-% \begin{center}
-%   \begin{tikzpicture}
-%     \draw (2cm,22cm) node {№};
-%     \draw (5cm,22cm) node {Паша + Стас};
-%     \draw (12cm,22cm) node {5 капитанов + К};
-%     \draw (17cm,22cm) node {Ж};
+\begin{tikzpicture}
+  \ptitle{Паша + Стас}{5 капитанов + К}
+  \pcall{1<-2}{2}{0}{1}{П.Х.}{К.А.};
+  \pcall{1->2}{1}{6}{0}{П.Х.}{Д.М.};
+  \pcall{1<-2}{6}{2}{0}{П.Х.}{Т.К.};
+  \pcall{1->|2}{4}{2}{0}{П.Х.}{Д.Т.};
+  \pcall{1<-2}{3}{2}{0}{П.Х.}{Е.Б.};
+  \pcall{1->|2}{5}{-6}{0}{П.Х.}{Ф.Б.};
+  \psum{6}{1}{65};
+\end{tikzpicture}
 
-%     \draw[very thick] (1cm,21cm) -- (18cm,21cm);
-    
-%     \draw (2cm,20cm) node {2};
-%     \draw (5cm,20cm) node {0};
-%     \draw (12cm,20cm) node {1};
-%     \draw (17cm,20cm) node {11};
-%     \draw[very thick,o->] (11cm,20cm) node[above] {К.А.} -- (6cm,20cm)
-%     node[above] {П.Х.};
+\bigskip
 
-%     \draw (2cm,19cm) node {1};
-%     \draw (5cm,19cm) node {6};
-%     \draw (12cm,19cm) node {0};
-%     \draw (17cm,19cm) node {6};
-%     \draw[very thick,o->] (6cm,19cm) node[above] {П.Х.} -- (11cm,19cm) node[above] {Д.М.};
+Паша + Стас: Павел Ходунов и Станислав Крымский.
 
-%     \draw (2cm,18cm) node {6};
-%     \draw (5cm,18cm) node {2};
-%     \draw (12cm,18cm) node {0};
-%     \draw (17cm,18cm) node {10};
-%     \draw[very thick,<-o] (6cm,18cm) node[above] {П.Х.} -- (11cm,18cm) node[above] {Т.К.};
-
-%     \draw (2cm,17cm) node {4};
-%     \draw (5cm,17cm) node {2};
-%     \draw (12cm,17cm) node {0};
-%     \draw (17cm,17cm) node {10};
-%     \draw[very thick,o->|] (6cm,17cm) node[above] {П.Х.} -- (11cm,17cm)
-%     node[above] {Д.Т.};
-%     \draw[very thick,<-|] (6cm,16.75cm) -- (11cm,16.75cm);
-
-%     \draw (2cm,16cm) node {3};
-%     \draw (5cm,16cm) node {2};
-%     \draw (12cm,16cm) node {0};
-%     \draw (17cm,16cm) node {10};
-%     \draw[very thick,<-o] (6cm,16cm) node[above] {П.Х.} -- (11cm,16cm) node[above] {Е.Б.};
-
-%     \draw (2cm,15cm) node {5};
-%     \draw (5cm,15cm) node {-6};
-%     \draw (12cm,15cm) node {0};
-%     \draw (17cm,15cm) node {18};
-%     \draw[very thick,o->|] (6cm,15cm) node[above] {П.Х.} -- (11cm,15cm)
-%     node[above] {Ф.Б.};
-%     \draw[very thick,<-|] (6cm,14.75cm) -- (11cm,14.75cm);
-
-%     \draw[very thick] (1cm,14cm) -- (18cm,14cm);
-
-%     \draw (2cm,13cm) node {Сумма};
-
-%     \draw (5cm,13cm) node {6};
-%     \draw (12cm,13cm) node {1};
-%     \draw (17cm,13cm) node {65};
-
-%     \draw[very thick] (1cm,12cm) -- (18cm,12cm);
-
-
-%     \draw (5cm,10cm) node[text width=5cm,text centered] {Павел Ходунов\\ Станислав Крымский};
-%     \draw (11cm,10cm) node[text width=5cm,text centered] {Кирилл Антонов\\ Дмитрий Морозов (к)\\
-%       Тимофей Кокурошников\\ Даниил Трофимов\\ Егор Богомолов\\ Фарид Багиров};
-%     \draw (16cm,10cm) node[text width=5cm,text centered] {Дмитрий Соколов\\ Игорь Шендерович};
-%   \end{tikzpicture}
-% \end{center}
+5 капитанов + К: Кирилл Антонов, Дмитрий Морозов, Тимофей
+Кокурошников, Даниил Трофимов, Егор Богомолов и Фарид Багиров. 
 
 \clearpage
 
