@@ -116,11 +116,11 @@
 	\pagebreak[2]
 }
 
-% шаблон для протокола физбоя
+% протокол физбоя
 % ширина протокола, задаётся вручную, по умолчанию равен ширине текста
 % на странице
 \newlength{\pwidth}
-\pwidth=\textwidth
+\pwidth=0.9\textwidth
 % высота ячейки
 \newlength{\pheightcell}
 \pheightcell=1.75cm
@@ -131,93 +131,242 @@
 \newcounter{nocall}
 \setcounter{nocall}{1}
 % заголовок протокола: названия команд
-\newcommand{\ptitle}[2]{
+\newcommand{\pdtitle}[2]{
   \draw[thick] (0,0) rectangle (0.1*\pwidth,-\pheightcell) node[midway] {\textbf{№}};
-  \draw[thick] (0.1*\pwidth,0) rectangle (0.45*\pwidth,-\pheightcell) node[midway] {\textbf{#1}};
-  \draw[thick] (0.45*\pwidth,0) rectangle (0.8*\pwidth,-\pheightcell)
+  \draw[thick] (0.1*\pwidth,0) rectangle (0.46*\pwidth,-\pheightcell)
+  node[midway] {\textbf{#1}};
+  \draw[thick] (0.46*\pwidth,0) rectangle (0.82*\pwidth,-\pheightcell)
   node[midway] {\textbf{#2}}; 
-  \draw[thick] (0.8*\pwidth,0) rectangle (\pwidth,-\pheightcell) node[midway] {\textbf{Ж}};
-}
-% подведение итогов
-% \psum{баллы команды 1}{баллы команды 2}{баллы жюри}
-\newcommand{\psum}[3]{ 
-  \def\pos{\arabic{nocall}*\pheightcell};
-  % рамка вокруг ячейки
-  \draw[thick] (0,-\pos) rectangle (\pwidth,-\pos-\pheightcell);
-  % "Итог" и рамка
-  \draw[thick] (0,-\pos) rectangle (0.1*\pwidth,-\pos-\pheightcell)
-  node[midway] {Итог:};
-  \draw[thick] (0.1*\pwidth,-\pos) rectangle
-  (0.45*\pwidth,-\pos-\pheightcell) node[midway] {\LARGE{#1}};
-
-  \draw[thick] (0.45*\pwidth,-\pos) rectangle (0.8*\pwidth,-\pos-\pheightcell)
-  node[midway] {\LARGE{#2}}; 
-
-  \draw[thick] (0.8*\pwidth,-\pos) rectangle (\pwidth,-\pos-\pheightcell)
-  node[midway] {\LARGE{#3}}; 
+  \draw[thick] (0.82*\pwidth,0) rectangle (\pwidth,-\pheightcell)
+  node[midway] {\textbf{Ж}};
 }
 
 % вызов на задачу: порядок вызова, номер задачи, баллы
 % отвечающего и оппонента, инициалы участников
 % условные обозначения для порядка вызова:
-% 1->2 --- команда 1 вызывает команду 2
-% 1<-2 --- команда 2 вызывает команду 1
-% 1->|2 --- команда 1 вызывала команду 2, но получила проверку корректности
-% 1|<-2 --- команда 2 вызывала команду 1, но получила проверку корректности
-\newcommand{\pcall}[6]{
+% -> --- команда 1 вызывает команду 2
+% <- --- команда 2 вызывает команду 1
+% ->| --- команда 1 вызывала команду 2, но получила проверку корректности
+% |<- --- команда 2 вызывала команду 1, но получила проверку корректности
+\newcommand{\pdcall}[6]{
   % определяем местонахождение очередной ячейки
   \def\pos{\arabic{nocall}*\pheightcell};
+  \def\mid{-\pos-0.5*\pheightcell};
+  % места, где будут стоять баллы
+  \coordinate (bone) at (0.28*\pwidth,\mid);
+  \coordinate (btwo) at (0.64*\pwidth,\mid);
   % рамка вокруг ячейки
   \draw[thick] (0,-\pos) rectangle (\pwidth,-\pos-\pheightcell);
   % номер задачи и рамка
   \draw[thick] (0,-\pos) rectangle (0.1*\pwidth,-\pos-\pheightcell)
   node[midway] {#2};
+  % баллы слева направо
+  \node (a) at (bone) {\Large{#3}};
+  \node (b) at (btwo) {\Large{#4}};
+  % инициалы отвечающего и оппонента
+  \node at ([shift={(1.1cm,0.4cm)}]a) {#5};
+  \node at ([shift={(-1.1cm,0.4cm)}]b) {#6};
   % switch
-  \def\calllr{1->2}
-  \def\callrl{1<-2}
-  \def\calllor{1->|2}
-  \def\callrol{1|<-2}
+  \def\calllr{->}
+  \def\callrl{<-}
+  \def\calllor{->|}
+  \def\callrol{|<-}
   \begingroup
   \def\tmp{#1}%
   \ifx\tmp\calllr
-    \draw[very thick,*->] (0.28*\pwidth,-\pos-0.5*\pheightcell)%
-    node[left=0.2cm] {\Large{#3}} -- ++(0.33*\pwidth,0) node[right=0.2cm]%
-    {\Large{#4}};%
+    \draw[very thick,*->] (a.east) -- (b.west);
   \else\ifx\tmp\callrl
-    \draw[very thick,<-*] (0.28*\pwidth,-\pos-0.5*\pheightcell)
-    node[left=0.2cm] {\Large{#3}} -- ++(0.33*\pwidth,0) node[right=0.2cm]
-    {\Large{#4}};%
+    \draw[very thick,<-*] (a.east) -- (b.west);
   \else\ifx\tmp\calllor
-    \draw[very thick,*->] (0.28*\pwidth,-\pos-0.45*\pheightcell)
-    node[left=0.2cm] {\Large{#3}} --  ++(0.33*\pwidth,0) node[right=0.2cm]
-    {\Large{#4}};%
-    % отскок
-    \draw[very thick,->,rotate around={180:(0.445*\pwidth,-\pos-0.55*\pheightcell)}]
-    (0.28*\pwidth,-\pos-0.47*\pheightcell)  -- ++(0.33*\pwidth,0);%
-    \draw[ultra thick] (0.61*\pwidth,-\pos-0.37*\pheightcell) -- ++(0,-0.6cm);%
+    \draw[very thick,*->,rounded corners=0.2cm] (a.east) -- (b.west)
+    -- ++(0,-0.4cm) -- ($(a.east)+(0,-0.4cm)$);
   \else\ifx\tmp\callrol
-    \draw[very thick,<-*] (0.28*\pwidth,-\pos-0.45*\pheightcell)
-    node[left=0.2cm] {\Large{#3}} --  ++(0.33*\pwidth,0) node[right=0.2cm]
-    {\Large{#4}};%
-    % отскок
-    \draw[very thick,<-,rotate around={180:(0.445*\pwidth,-\pos-0.55*\pheightcell)}]
-    (0.28*\pwidth,-\pos-0.47*\pheightcell)  -- ++(0.33*\pwidth,0);%
-    \draw[ultra thick] (0.28*\pwidth,-\pos-0.37*\pheightcell) --
-    ++(0,-0.6cm);%
+    \draw[very thick,*->,rounded corners=0.2cm] (b.west) -- (a.east)
+    -- ++(0,-0.4cm) -- ($(b.west)+(0,-0.4cm)$);
   \fi\fi\fi\fi
   \endgroup
-  % инициалы
-  \draw (0.35*\pwidth,-\pos-0.25*\pheightcell) node {#5} ++(0.2*\pwidth,0) node {#6};
   % баллы жюри и рамка
   \addtocounter{jury}{-#3}
   \addtocounter{jury}{-#4}
-  \draw[thick] (0.8*\pwidth,-\pos) rectangle (\pwidth,-\pos-\pheightcell)
+  \draw[thick] (0.82*\pwidth,-\pos) rectangle (\pwidth,-\pos-\pheightcell)
   node[midway] {\Large{\arabic{jury}}};
   % переход на следующий круг
   \setcounter{jury}{12}
   \addtocounter{nocall}{1}
 }
 
+% подведение итогов
+% \psum{баллы команды 1}{баллы команды 2}{баллы жюри}
+\newcommand{\pdsum}[3]{ 
+  \def\pos{\arabic{nocall}*\pheightcell-1cm};
+  % рамка вокруг ячейки
+  \draw[thick] (0,-\pos) rectangle (\pwidth,-\pos-\pheightcell);
+  % "Итог" и рамка
+  \draw[thick] (0,-\pos) rectangle (0.1*\pwidth,-\pos-\pheightcell)
+  node[midway] {Итог:};
+  \draw[thick] (0.1*\pwidth,-\pos) rectangle
+  (0.46*\pwidth,-\pos-\pheightcell) node[midway] {\LARGE{#1}};
+
+  \draw[thick] (0.46*\pwidth,-\pos) rectangle (0.82*\pwidth,-\pos-\pheightcell)
+  node[midway] {\LARGE{#2}}; 
+
+  \draw[thick] (0.82*\pwidth,-\pos) rectangle (\pwidth,-\pos-\pheightcell)
+  node[midway] {\LARGE{#3}}; 
+  \setcounter{nocall}{1}
+}
+
+
+% тройной физбой
+% заголовок
+\newcommand{\pttitle}[3]{
+  \draw[thick] (0,0) rectangle (0.1*\pwidth,-\pheightcell) node[midway] {\textbf{№}};
+  \draw[thick] (0.1*\pwidth,0) rectangle
+  ++(0.26*\pwidth,-\pheightcell) node[midway] {\textbf{#1}};
+  \draw[thick] (0.36*\pwidth,0) rectangle ++(0.26*\pwidth,-\pheightcell)
+  node[midway] {\textbf{#2}}; 
+  \draw[thick] (0.62*\pwidth,0) rectangle ++(0.26*\pwidth,-\pheightcell)
+  node[midway] {\textbf{#2}}; 
+  \draw[thick] (0.88*\pwidth,0) rectangle (\pwidth,-\pheightcell)
+  node[midway] {\textbf{Ж}};
+}
+
+% вызов 
+% первый аргумент показывает, есть ли проверка корректности
+% если вызов обычный - аргумент пустой
+% если проверка - можно написать всё, что угодно (например,
+% какую-нибудь букву)
+% \ptcall{#1}{номер
+% задачи}{баллы1}{баллы2}{баллы3}{ф.и.1}{ф.и.2}{ф.и.3}
+\newcommand{\ptcall}[8]{
+  \edef\cl{\arabic{nocall}};
+  % определяем местонахождение очередной ячейки
+  \def\pos{\arabic{nocall}*\pheightcell};
+  \def\mid{-\pos-0.5*\pheightcell};
+  % места, где будут стоять баллы
+  \coordinate (bone) at (0.23*\pwidth,\mid);
+  \coordinate (btwo) at (0.49*\pwidth,\mid);
+  \coordinate (bthree) at (0.75*\pwidth,\mid);
+  % рамка вокруг ячейки
+  \draw[thick] (0,-\pos) rectangle (\pwidth,-\pos-\pheightcell);
+  % номер задачи и рамка
+  \draw[thick] (0,-\pos) rectangle (0.1*\pwidth,-\pos-\pheightcell)
+  node[midway] {#2};
+  % баллы слева направо
+  \node (a) at (bone) {\Large{#3}};
+  \node (b) at (btwo) {\Large{#4}};
+  \node (c) at (bthree) {\Large{#5}};
+  % инициалы слева направо
+  \node at ([shift={(0,0.6cm)}]a) {#6};
+  \node at ([shift={(0,0.6cm)}]b) {#7};
+  \node at ([shift={(0,0.6cm)}]c) {#8};
+  % поскольку порядок вызовов определяется автоматически,
+  % здесь сразу рисуется стрелка вызова в зависимости от номера хода
+  % кроме того, проверяем, есть ли проверка корректности
+  % 1-й ход
+  \ifnumequal{\cl}{1}{
+    \ifblank{#1}
+    {
+      \draw[very thick,*->] (a.east) -- (b.west);
+    }
+    {
+      \draw[very thick,*->,rounded corners=0.2cm]
+      (a.east) -- (b.west) -- ++(0,-0.4) -- ($(a.east)+(0,-0.4cm)$);
+    }
+  }{}
+  % 2-й ход
+  \ifnumequal{\cl}{2}{
+    \ifblank{#1}
+    {
+      \draw[very thick,*->] (b.east) -- (c.west);
+    }
+    {
+      \draw[very thick,*->,rounded corners=0.2cm] (b.east) -- (c.west)
+      -- ++(0,-0.4cm) -- ($(b.east)+(0,-0.4cm)$);
+    }
+  }{}
+  % 3-й ход
+  \ifnumequal{\cl}{3}{
+    \draw[very thick,*-] (c.east) -- (0.88*\pwidth,\mid);
+    \ifblank{#1}
+    {
+      \draw[very thick,->] (0.1*\pwidth,\mid) -- (a.west);
+    }
+    {
+      \draw[very thick,rounded corners=0.2cm] (0.1*\pwidth,\mid) --
+      (a.west) -- ++(0,-0.4cm) -- (0.1*\pwidth,\mid-0.4cm);
+      \draw[very thick,->] (0.88*\pwidth,\mid-0.4cm) -- ($(c.east) +
+      (0,-0.4cm)$);
+    }
+  }{}
+  % 4-й ход
+  \ifnumequal{\cl}{4}{
+    \draw[very thick,-*] (0.1*\pwidth,\mid) -- (a.west);
+    \ifblank{#1}
+    {
+      \draw[very thick,->] (0.88*\pwidth,\mid) -- (c.east);
+    }
+    {
+      \draw[very thick,rounded corners=0.2cm] (0.88*\pwidth,\mid) --
+      (c.east) -- ++(0,-0.4cm) -- (0.88*\pwidth,\mid-0.4cm);
+      \draw[very thick,->] (0.1*\pwidth,\mid-0.4cm) --
+      ($(a.west)+(0,-0.4cm)$); 
+    }
+  }{}
+  % 5-й ход
+  \ifnumequal{\cl}{5}{
+    \ifblank{#1}
+    {
+      \draw[very thick,*->] (c.west) -- (b.east);
+    }
+    {
+      \draw[very thick,rounded corners=0.2cm,*->] (c.west) -- (b.east)
+      -- ++(0,-0.4cm) -- ($(c.west)+(0,-0.4cm)$);
+    }
+  }{}
+  % 6-й ход
+  \ifnumequal{\cl}{6}{
+    \ifblank{#1}
+    {
+      \draw[very thick,*->] (b.west) -- (a.east);
+    }
+    {
+      \draw[very thick,rounded corners=0.2cm,*->] (b.west) -- (a.east)
+      -- ++(0,-0.4cm) -- ($(b.west)+(0,-0.4cm)$) ;
+    }
+  }{}
+  % баллы жюри и рамка
+  \addtocounter{jury}{-#3} 
+  \addtocounter{jury}{-#4} 
+  \addtocounter{jury}{-#5} 
+  \draw[thick] (0.88*\pwidth,-\pos) rectangle
+  (\pwidth,-\pos-\pheightcell) node[midway] {\Large{\arabic{jury}}};
+  % переход на следующий круг
+  \setcounter{jury}{12}
+  \addtocounter{nocall}{1}
+}
+
+% подведение итогов
+\newcommand{\ptsum}[4]{ 
+  \def\pos{\arabic{nocall}*\pheightcell-1cm};
+  % рамка вокруг ячейки
+  \draw[thick] (0,-\pos) rectangle (\pwidth,-\pos-\pheightcell);
+  % "Итог" и рамка
+  \draw[thick] (0,-\pos) rectangle (0.1*\pwidth,-\pos-\pheightcell)
+  node[midway] {Итог:};
+  % баллы
+  \draw[thick] (0.1*\pwidth,-\pos) rectangle
+  (0.36*\pwidth,-\pos-\pheightcell) node[midway] {\LARGE{#1}};
+
+  \draw[thick] (0.36*\pwidth,-\pos) rectangle (0.62*\pwidth,-\pos-\pheightcell)
+  node[midway] {\LARGE{#2}}; 
+
+  \draw[thick] (0.62*\pwidth,-\pos) rectangle (0.88*\pwidth,-\pos-\pheightcell)
+  node[midway] {\LARGE{#3}}; 
+
+  \draw[thick] (0.88*\pwidth,-\pos) rectangle (\pwidth,-\pos-\pheightcell)
+  node[midway] {\LARGE{#4}}; 
+  \setcounter{nocall}{1}
+}
 
 \tikzset{>=latex, interface/.style = {postaction = {draw, decorate,
 	    decoration = {border, angle = 45, amplitude = 0.2cm, segment length=1.4323mm}}},%
@@ -1800,21 +1949,21 @@
 \end{center}
 
 \begin{tikzpicture}
-  \ptitle{Паша + Стас}{5 капитанов + К}
-  \pcall{1<-2}{2}{0}{1}{П.Х.}{К.А.};
-  \pcall{1->2}{1}{6}{0}{П.Х.}{Д.М.};
-  \pcall{1<-2}{6}{2}{0}{П.Х.}{Т.К.};
-  \pcall{1->|2}{4}{2}{0}{П.Х.}{Д.Т.};
-  \pcall{1<-2}{3}{2}{0}{П.Х.}{Е.Б.};
-  \pcall{1->|2}{5}{-6}{0}{П.Х.}{Ф.Б.};
-  \psum{6}{1}{65};
+  \pdtitle{Паша + Стас}{5 капитанов + К}
+  \pdcall{<-}{2}{0}{1}{П.Х.}{К.А.};
+  \pdcall{->}{1}{6}{0}{П.Х.}{Д.М.};
+  \pdcall{<-}{6}{2}{0}{П.Х.}{Т.К.};
+  \pdcall{->|}{4}{2}{0}{П.Х.}{Д.Т.};
+  \pdcall{<-}{3}{2}{0}{П.Х.}{Е.Б.};
+  \pdcall{->|}{5}{-6}{0}{П.Х.}{Ф.Б.};
+  \pdsum{6}{1}{65};
 \end{tikzpicture}
 
 \bigskip
 
-Паша + Стас: Павел Ходунов и Станислав Крымский.
+\textit{Паша + Стас:} Павел Ходунов и Станислав Крымский.
 
-5 капитанов + К: Кирилл Антонов, Дмитрий Морозов, Тимофей
+\textit{5 капитанов + К:} Кирилл Антонов, Дмитрий Морозов, Тимофей
 Кокурошников, Даниил Трофимов, Егор Богомолов и Фарид Багиров. 
 
 \clearpage
